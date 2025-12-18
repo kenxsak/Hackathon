@@ -25,7 +25,7 @@ function hexToRgba(hexColor: string, alpha: number): string {
 }
 
 const AnimatedBadge = ({
-  text = "New version of Otisium is out!",
+  text = "New version of ReText is out!",
   color = "#22d3ee",
   href,
 }: AnimatedBadgeProps) => {

@@ -2,9 +2,9 @@ import { useState, useEffect, ReactNode } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import {
-  Settings, Bell, X, LogOut, HelpCircle, Monitor, Sun, Moon, Mail,
+  Settings, Bell, X, LogOut, Monitor, Sun, Moon, Mail,
   RefreshCw, SpellCheck, ScanSearch, Shield, Bot, MessageSquare,
-  ImageIcon, Languages, FileText, Quote, Crown, Loader2,
+  ImageIcon, Languages, FileText, Loader2,
 } from "lucide-react";
 import { useTheme } from "./contexts/theme-provider";
 
@@ -26,21 +26,17 @@ const SidebarIcon = ({ className }: { className?: string }) => (
 type User = { name: string; email: string; picture?: string };
 
 const sidebarTools = [
+  { icon: ScanSearch, label: "AI Detector", path: "/ai-detector" },
   { icon: RefreshCw, label: "Paraphraser", path: "/paraphraser" },
   { icon: SpellCheck, label: "Grammar Checker", path: "/grammar-checker" },
-  { icon: ScanSearch, label: "AI Detector", path: "/ai-detector" },
   { icon: Shield, label: "Plagiarism Checker", path: "/plagiarism-checker" },
   { icon: Bot, label: "AI Humanizer", path: "/ai-humanizer" },
   { icon: MessageSquare, label: "AI Chat", path: "/ai-chat" },
   { icon: ImageIcon, label: "AI Image Generator", path: "/ai-image-generator" },
   { icon: Languages, label: "Translate", path: "/translate" },
   { icon: FileText, label: "Summarizer", path: "/summarizer" },
-  { icon: Quote, label: "Citation Generator", path: "/citation-generator" },
 ];
-
-const sidebarExtras = [{ icon: Crown, label: "Otisium Premium", path: "/premium" }];
 const sidebarBottom = [
-  { icon: HelpCircle, label: "Help Center", path: "/help" },
   { icon: Mail, label: "Contact us", path: "/contact" },
 ];
 
@@ -125,14 +121,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
               </button>
             ))}
           </div>
-          <div className={`mt-4 pt-4 border-t space-y-1 ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
-            {sidebarExtras.map((item, index) => (
-              <button key={index} onClick={() => navigate(item.path)} className={`w-full flex items-center rounded-lg transition-colors ${sidebarOpen ? "gap-3 px-3 py-2.5" : "justify-center p-2"} ${isDark ? "text-amber-400 hover:bg-zinc-800/50" : "text-amber-600 hover:bg-gray-100"}`}>
-                <item.icon className="w-5 h-5 flex-shrink-0" />
-                {sidebarOpen && <span className="text-sm">{item.label}</span>}
-              </button>
-            ))}
-          </div>
+
           <div className={`mt-4 pt-4 border-t space-y-1 ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
             {sidebarBottom.map((item, index) => (
               <button key={index} onClick={() => navigate(item.path)} className={`w-full flex items-center rounded-lg transition-colors ${sidebarOpen ? "gap-3 px-3 py-2.5" : "justify-center p-2"} ${isDark ? "text-gray-400 hover:bg-zinc-800/50 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"}`}>
@@ -207,13 +196,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
               </button>
             ))}
           </div>
-          <div className={`mt-4 pt-4 border-t space-y-1 ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
-            {sidebarExtras.map((item, index) => (
-              <button key={index} onClick={() => { navigate(item.path); setMobileMenuOpen(false); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${isDark ? "text-amber-400 hover:bg-zinc-800/50" : "text-amber-600 hover:bg-gray-100"}`}>
-                <item.icon className="w-5 h-5" /><span className="text-sm">{item.label}</span>
-              </button>
-            ))}
-          </div>
+
           <div className={`mt-4 pt-4 border-t space-y-1 ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
             {sidebarBottom.map((item, index) => (
               <button key={index} onClick={() => { navigate(item.path); setMobileMenuOpen(false); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${isDark ? "text-gray-400 hover:bg-zinc-800/50 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"}`}>

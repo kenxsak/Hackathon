@@ -7,31 +7,31 @@ interface FAQItemProps { question: string; answer: ReactNode; value?: string; }
 interface FAQProps { title?: string; items?: FAQItemProps[] | false; className?: string; }
 
 export default function FAQ({
-  title = "Questions and Answers",
+  title = "Frequently Asked Questions",
   items = [
     {
-      question: "Why building a great landing page is critical for your business?",
-      answer: (<><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">In today&apos;s AI-driven world, standing out is harder than ever. While anyone can build a product, a professional landing page makes the difference between success and failure.</p><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">Otisium helps you ship faster without compromising on quality.</p></>),
+      question: "How accurate is ReText's AI detection?",
+      answer: (<><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">ReText uses advanced  analysis powered by Gemini 3 Pro to detect AI-generated content with up to 98% accuracy. Our system analyzes lexical patterns, sentence structure, semantic consistency, and linguistic markers to provide reliable results.</p><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">We highlight suspicious segments and provide detailed metrics including perplexity, burstiness, and repetitiveness scores.</p></>),
     },
     {
-      question: "Why use Otisium instead of a no-code tool?",
-      answer: (<><p className="text-muted-foreground mb-4 max-w-[600px]">No-code tools lock you into their ecosystem with recurring fees and limited control. They often come with performance issues and make it difficult to integrate with your product.</p><p className="text-muted-foreground mb-4 max-w-[600px]">You can&apos;t even change your hosting provider and basic things like web analytics come as extra costs and paid add-ons.</p><p className="text-muted-foreground mb-4 max-w-[600px]">What might seem like a convenient solution today could paint you into a corner tomorrow, limiting your ability to scale and adapt. Otisium gives you full control of your code while maintaining professional quality.</p></>),
+      question: "What AI models does ReText use?",
+      answer: (<><p className="text-muted-foreground mb-4 max-w-[600px]">ReText is powered by Google&apos;s latest Gemini 3 Pro Preview model, which offers state-of-the-art language understanding and generation capabilities.</p><p className="text-muted-foreground mb-4 max-w-[600px]">For image generation, we use Pollinations AI, a free and powerful image generation service that creates stunning visuals from text descriptions.</p></>),
     },
     {
-      question: "How Otisium is different from other components libraries and templates?",
-      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">Otisium stands out with premium design quality and delightful touches of custom animations and illustrations.</p><p className="text-muted-foreground mb-4 max-w-[580px]">All components are carefully crafted to help position your product as a professional tool, avoiding the generic template look.</p><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">Unlike many libraries that rely on outdated CSS practices and old dependencies, Otisium is built with modern technologies and best practices in mind.</p></>),
+      question: "Can ReText humanize AI-generated content?",
+      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">Yes! Our AI Humanizer tool transforms AI-generated text into natural, human-like writing. It adds natural imperfections, varies sentence structure, and removes robotic patterns while preserving the original meaning.</p><p className="text-muted-foreground mb-4 max-w-[580px]">This is perfect for students, content creators, and professionals who want their AI-assisted content to sound more authentic.</p></>),
     },
     {
-      question: 'Why exactly does it mean that "The code is yours"?',
-      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">The basic version of Otisium is open-source and free forever, under a do-whatever-you-want license.</p><p className="text-muted-foreground mb-4 max-w-[580px]">The pro version that contains more components and options is a one-time purchase that gives you lifetime access to all current and future content. Use it for unlimited personal and commercial projects - no recurring fees or restrictions.</p><p className="text-muted-foreground mb-4 max-w-[580px]">For complete details about licensing and usage rights, check out <a href="/pricing" className="text-foreground underline">the pricing page</a>.</p></>),
+      question: "What writing tools are included?",
+      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">ReText includes a comprehensive suite of AI-powered writing tools:</p><ul className="text-muted-foreground mb-4 max-w-[580px] list-disc list-inside space-y-1"><li>AI Content Detector with  analysis</li><li>AI Humanizer to make text sound natural</li><li>Smart Paraphraser with multiple modes</li><li>Grammar & Spelling Checker</li><li>Plagiarism Checker</li><li>AI Chat Assistant</li><li>Multi-language Translator (50+ languages)</li><li>Text Summarizer</li><li>AI Image Generator</li></ul></>),
     },
     {
-      question: "Are Figma files included?",
-      answer: (<p className="text-muted-foreground mb-4 max-w-[580px]">Yes! The complete Otisium template is available for free on the <a href="https://www.figma.com/community/file/1420131743903900629/launch-ui-landing-page-components-ui-kit" className="text-foreground underline">Figma community</a>.</p>),
+      question: "Is ReText free to use?",
+      answer: (<p className="text-muted-foreground mb-4 max-w-[580px]">ReText offers free access to all core features. Simply create an account to start using our AI detection, paraphrasing, grammar checking, and other writing tools. No credit card required!</p>),
     },
     {
-      question: "Can I get a discount?",
-      answer: (<p className="text-muted-foreground mb-4 max-w-[580px]">Actually, yes! I&apos;m always acively looking for beta testers of new features. If you are interested in exchanging feedback for a discount, please contact me via <a href={siteConfig.links.email} className="underline underline-offset-2">email</a>.</p>),
+      question: "How many languages does ReText support?",
+      answer: (<p className="text-muted-foreground mb-4 max-w-[580px]">ReText supports over 50 languages for translation and content analysis, including English, Spanish, French, German, Chinese, Japanese, Arabic, Hindi, and many more. Our AI detection works best with English content but supports multiple languages.</p>),
     },
   ],
   className,

@@ -6,10 +6,10 @@ interface StatsProps { items?: StatItemProps[] | false; className?: string; }
 
 export default function Stats({
   items = [
-    { label: "used by", value: Math.round(siteConfig.stats.figma / 100) / 10, suffix: "k", description: "designers on Figma Community" },
-    { label: "over", value: siteConfig.stats.github, description: "clones and forks of the template on Github" },
-    { label: "already", value: Math.round(siteConfig.stats.cli / 100) / 10, suffix: "k", description: "installations with shadcn/ui CLI" },
-    { label: "includes", value: siteConfig.stats.sections, description: "blocks and sections" },
+    { label: "detection accuracy", value: 98, suffix: "%", description: "AI content detection accuracy" },
+    { label: "powered by", value: "Gemini", description: "Google's latest AI model" },
+    { label: "supports", value: 50, suffix: "+", description: "languages for translation" },
+    { label: "includes", value: 9, description: "powerful AI writing tools" },
   ],
   className,
 }: StatsProps) {

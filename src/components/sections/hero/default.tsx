@@ -13,13 +13,13 @@ interface HeroButtonProps { href: string; text: string; variant?: VariantProps<t
 interface HeroProps { title?: string; description?: string; mockup?: ReactNode | false; badge?: ReactNode | false; buttons?: HeroButtonProps[] | false; className?: string; }
 
 export default function Hero({
-  title = "Give your big idea the design it deserves",
-  description = "Professionally designed blocks and templates built with React, Shadcn/ui and Tailwind that will help your product stand out.",
-  mockup = <Screenshot srcLight="/dashboard-light.png" srcDark="/dashboard-dark.png" alt="Otisium app screenshot" width={1248} height={765} className="w-full" />,
-  badge = <AnimatedBadge text="New version of Otisium is out!" color="#f97316" href="#" />,
+  title = "AI-Powered Writing Assistant for Everyone",
+  description = "Detect AI-generated content with 98% accuracy, humanize your text, check grammar, and enhance your writing with our advanced AI tools powered by Gemini 3 Pro.",
+  mockup = <Screenshot srcLight="/dashboard-light.png" srcDark="/dashboard-dark.png" alt="ReText AI Writing Assistant Dashboard" width={1248} height={765} className="w-full" />,
+  badge = <AnimatedBadge text="🚀 Powered by Gemini 3 Pro Preview" color="#10b981" href="#" />,
   buttons = [
-    { href: "#", text: "Get Started", variant: "default" },
-    { href: "#", text: "Github", variant: "glow", icon: <Github className="mr-2 size-4" /> },
+    { href: "/signup", text: "Start Free", variant: "default" },
+    { href: "/login", text: "Sign In", variant: "glow" },
   ],
   className,
 }: HeroProps) {

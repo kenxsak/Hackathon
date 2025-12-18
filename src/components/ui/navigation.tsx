@@ -18,26 +18,26 @@ interface NavigationProps {
 
 export default function Navigation({
   menuItems = [
-    { title: "Getting started", content: "default" },
-    { title: "Components", content: "components" },
-    { title: "Documentation", isLink: true, href: "#" },
+    { title: "AI Tools", content: "default" },
+    { title: "Writing Tools", content: "components" },
+    { title: "Contact", isLink: true, href: "/contact" },
   ],
   components = [
-    { title: "Alert Dialog", href: "/docs/primitives/alert-dialog", description: "A modal dialog that interrupts the user with important content and expects a response." },
-    { title: "Hover Card", href: "/docs/primitives/hover-card", description: "For sighted users to preview content available behind a link." },
-    { title: "Progress", href: "/docs/primitives/progress", description: "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar." },
-    { title: "Scroll-area", href: "/docs/primitives/scroll-area", description: "Visually or semantically separates content." },
-    { title: "Tabs", href: "/docs/primitives/tabs", description: "A set of layered sections of content—known as tab panels—that are displayed one at a time." },
-    { title: "Tooltip", href: "/docs/primitives/tooltip", description: "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it." },
+    { title: "Paraphraser", href: "/paraphraser", description: "Rewrite content in multiple styles while preserving meaning and improving clarity." },
+    { title: "Grammar Checker", href: "/grammar-checker", description: "Advanced grammar, spelling, and punctuation correction with explanations." },
+    { title: "Plagiarism Checker", href: "/plagiarism-checker", description: "Scan your content for potential plagiarism and ensure originality." },
+    { title: "Summarizer", href: "/summarizer", description: "Condense long texts into concise summaries in various formats." },
+    { title: "Translator", href: "/translate", description: "Translate content between 50+ languages with AI accuracy." },
+    { title: "AI Image Generator", href: "/ai-image-generator", description: "Create stunning images from text descriptions using Pollinations AI." },
   ],
   logo = <LaunchUI />,
-  logoTitle = "Otisium",
-  logoDescription = "Landing page template built with React, Shadcn/ui and Tailwind that you can copy/paste into your project.",
-  logoHref = "#",
+  logoTitle = "ReText",
+  logoDescription = "AI-powered writing assistant with  AI detection, humanizer, and comprehensive writing tools.",
+  logoHref = "/",
   introItems = [
-    { title: "Introduction", href: "#", description: "Re-usable components built using Radix UI and Tailwind CSS." },
-    { title: "Installation", href: "#", description: "How to install dependencies and structure your app." },
-    { title: "Typography", href: "#", description: "Styles for headings, paragraphs, lists...etc" },
+    { title: "AI Detector", href: "/ai-detector", description: "Detect AI-generated content with 98% accuracy using  analysis." },
+    { title: "AI Humanizer", href: "/ai-humanizer", description: "Transform AI text into natural, human-like writing." },
+    { title: "AI Chat", href: "/ai-chat", description: "Get instant help with writing and research using Gemini 3 Pro." },
   ],
 }: NavigationProps) {
   return (

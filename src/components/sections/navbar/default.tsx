@@ -1,6 +1,6 @@
 import { type VariantProps } from "class-variance-authority";
-import { Menu } from "lucide-react";
-import { ReactNode } from "react";
+import { Menu, LayoutDashboard } from "lucide-react";
+import { ReactNode, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import LaunchUI from "../../logos/launch-ui";
 import { Button, buttonVariants } from "../../ui/button";
@@ -14,12 +14,13 @@ interface NavbarProps { logo?: ReactNode; name?: string; homeUrl?: string; mobil
 
 export default function Navbar({
   logo = <LaunchUI />,
-  name = "Otisium",
-  homeUrl = "#",
+  name = "ReText",
+  homeUrl = "/",
   mobileLinks = [
-    { text: "Getting Started", href: "#" },
-    { text: "Components", href: "#" },
-    { text: "Documentation", href: "#" },
+    { text: "AI Detector", href: "/ai-detector" },
+    { text: "Paraphraser", href: "/paraphraser" },
+    { text: "AI Humanizer", href: "/ai-humanizer" },
+    { text: "Grammar Checker", href: "/grammar-checker" },
   ],
   actions = [
     { text: "Sign in", href: "/login", isButton: false },
@@ -29,6 +30,14 @@ export default function Navbar({
   customNavigation,
   className,
 }: NavbarProps) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    setIsLoggedIn(!!token && !!user);
+  }, []);
+
   return (
     <header className={cn("sticky top-0 z-50 -mb-4 px-4 pb-4", className)}>
       <div className="fade-bottom bg-background/15 absolute left-0 h-24 w-full backdrop-blur-lg"></div>
@@ -39,14 +48,25 @@ export default function Navbar({
             {showNavigation && (customNavigation || <Navigation />)}
           </NavbarLeft>
           <NavbarRight>
-            {actions.map((action, index) =>
-              action.isButton ? (
-                <Button key={index} variant={action.variant || "default"} asChild>
-                  <a href={action.href}>{action.icon}{action.text}{action.iconRight}</a>
-                </Button>
-              ) : (
-                <a key={index} href={action.href} className="hidden text-sm md:block">{action.text}</a>
-              )
+            {isLoggedIn ? (
+              <Button variant="default" asChild>
+                <a href="/ai-detector" className="flex items-center gap-2">
+                  <LayoutDashboard className="size-4" />
+                  Dashboard
+                </a>
+              </Button>
+            ) : (
+              <>
+                {actions.map((action, index) =>
+                  action.isButton ? (
+                    <Button key={index} variant={action.variant || "default"} asChild>
+                      <a href={action.href}>{action.icon}{action.text}{action.iconRight}</a>
+                    </Button>
+                  ) : (
+                    <a key={index} href={action.href} className="hidden text-sm md:block">{action.text}</a>
+                  )
+                )}
+              </>
             )}
             <Sheet>
               <SheetTrigger asChild>
@@ -58,9 +78,16 @@ export default function Navbar({
               <SheetContent side="right">
                 <nav className="grid gap-6 text-lg font-medium">
                   <a href={homeUrl} className="flex items-center gap-2 text-xl font-bold"><span>{name}</span></a>
-                  {mobileLinks.map((link, index) => (
-                    <a key={index} href={link.href} className="text-muted-foreground hover:text-foreground">{link.text}</a>
-                  ))}
+                  {isLoggedIn ? (
+                    <a href="/ai-detector" className="text-foreground font-medium flex items-center gap-2">
+                      <LayoutDashboard className="size-5" />
+                      Dashboard
+                    </a>
+                  ) : (
+                    mobileLinks.map((link, index) => (
+                      <a key={index} href={link.href} className="text-muted-foreground hover:text-foreground">{link.text}</a>
+                    ))
+                  )}
                 </nav>
               </SheetContent>
             </Sheet>

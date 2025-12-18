@@ -4,15 +4,11 @@ import {
   Upload,
   ClipboardPaste,
   ChevronDown,
-  ChevronUp,
-  MessageSquare,
   Check,
   ShieldCheck,
   ShieldAlert,
   AlertTriangle,
   Fingerprint,
-  FileText,
-  X,
 } from "lucide-react";
 import DashboardLayout from "../components/DashboardLayout";
 import { useTheme } from "../components/contexts/theme-provider";
@@ -131,7 +127,7 @@ export default function Dashboard() {
       });
 
       const data = await response.json();
-      console.log("Forensic Analysis Response:", data);
+      console.log(" Analysis Response:", data);
 
       if (!response.ok) {
         throw new Error(data.message || "Detection failed");
@@ -207,11 +203,11 @@ export default function Dashboard() {
           <div className="flex items-center justify-center gap-2 mb-3">
             <Fingerprint className={`w-8 h-8 ${isDark ? "text-emerald-400" : "text-emerald-600"}`} />
             <h2 className={`text-2xl md:text-3xl font-bold ${isDark ? "text-white" : "text-gray-900"}`}>
-              AI Forensic Detector
+              AI  Detector
             </h2>
           </div>
           <p className={`text-sm md:text-base max-w-2xl mx-auto ${isDark ? "text-zinc-400" : "text-gray-600"}`}>
-            Advanced forensic analysis to detect AI-generated content. Identifies suspicious patterns, linguistic markers, and highlights specific AI-like segments.
+            Advanced  analysis to detect AI-generated content. Identifies suspicious patterns, linguistic markers, and highlights specific AI-like segments.
           </p>
         </div>
 
@@ -342,7 +338,7 @@ export default function Dashboard() {
                         ref={textareaRef}
                         value={inputText}
                         onChange={(e) => setInputText(e.target.value)}
-                        placeholder="Paste or type your text here for forensic analysis. Drag & drop files supported."
+                        placeholder="Paste or type your text here for  analysis. Drag & drop files supported."
                         className={`w-full h-64 resize-none rounded-xl p-4 text-sm focus:outline-none focus:ring-2 transition-all ${isDark ? "bg-zinc-900 text-white placeholder-zinc-500 border border-zinc-800 focus:ring-zinc-700" : "bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 focus:ring-gray-300"}`}
                       />
                     </motion.div>
@@ -377,7 +373,7 @@ export default function Dashboard() {
                       <Fingerprint className={`w-16 h-16 mb-4 ${isDark ? "text-zinc-700" : "text-gray-300"}`} />
                       <p className={`font-medium ${isDark ? "text-white" : "text-gray-900"}`}>Ready for Analysis</p>
                       <p className={`text-sm mt-1 ${isDark ? "text-zinc-500" : "text-gray-500"}`}>
-                        Add text to begin forensic detection
+                        Add text to begin  detection
                       </p>
                     </div>
                   )}
@@ -399,7 +395,7 @@ export default function Dashboard() {
                         <div className="absolute inset-0 w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
                       </div>
                       <div className="text-center">
-                        <p className={`font-medium ${isDark ? "text-white" : "text-gray-900"}`}>Forensic Analysis</p>
+                        <p className={`font-medium ${isDark ? "text-white" : "text-gray-900"}`}> Analysis</p>
                         <p className={`text-sm mt-1 ${isDark ? "text-zinc-500" : "text-gray-500"}`}>
                           Scanning for AI patterns...
                         </p>
@@ -496,15 +492,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Feedback Button */}
-        <div className="fixed right-4 bottom-4 md:right-8 md:bottom-8">
-          <button
-            className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-colors ${isDark ? "bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700" : "bg-white hover:bg-gray-50 text-gray-900 border border-gray-200"}`}
-          >
-            <MessageSquare className="w-4 h-4" />
-            <span className="text-sm font-medium">Feedback</span>
-          </button>
-        </div>
+
       </motion.div>
     </DashboardLayout>
   );

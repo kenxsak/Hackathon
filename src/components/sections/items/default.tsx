@@ -7,16 +7,16 @@ interface ItemProps { title: string; description: string; icon: ReactNode; }
 interface ItemsProps { title?: string; items?: ItemProps[] | false; className?: string; }
 
 export default function Items({
-  title = "Everything you need. Nothing you don't.",
+  title = "Powerful AI Writing Tools at Your Fingertips",
   items = [
-    { title: "Accessibility first", description: "Fully WCAG 2.0 compliant, made with best a11y practices", icon: <ScanFaceIcon className="size-5 stroke-1" /> },
-    { title: "Responsive design", description: "Looks and works great on any device and screen size", icon: <MonitorSmartphoneIcon className="size-5 stroke-1" /> },
-    { title: "Light and dark mode", description: "Seamless switching between color schemes, 6 themes included", icon: <EclipseIcon className="size-5 stroke-1" /> },
-    { title: "Easy to customize", description: "Flexible options to match your product or brand", icon: <BlocksIcon className="size-5 stroke-1" /> },
-    { title: "Top-level performance", description: "Made for lightning-fast load times and smooth interactions", icon: <FastForwardIcon className="size-5 stroke-1" /> },
-    { title: "Production ready", description: "Thoroughly tested and launch-prepared", icon: <RocketIcon className="size-5 stroke-1" /> },
-    { title: "Made for localisation", description: "Easy to implement support for multiple languages and regions", icon: <LanguagesIcon className="size-5 stroke-1" /> },
-    { title: "CMS friendly", description: "Built to work with your any headless content management system", icon: <SquarePenIcon className="size-5 stroke-1" /> },
+    { title: "AI Content Detection", description: " analysis to detect AI-generated text with 98% accuracy using advanced linguistic patterns", icon: <ScanFaceIcon className="size-5 stroke-1" /> },
+    { title: "AI Humanizer", description: "Transform AI-generated content into natural, human-like writing that bypasses detection", icon: <MonitorSmartphoneIcon className="size-5 stroke-1" /> },
+    { title: "Smart Paraphraser", description: "Rewrite content in multiple styles while preserving meaning and improving clarity", icon: <EclipseIcon className="size-5 stroke-1" /> },
+    { title: "Grammar Checker", description: "Advanced grammar, spelling, and punctuation correction with detailed explanations", icon: <BlocksIcon className="size-5 stroke-1" /> },
+    { title: "Plagiarism Checker", description: "Scan your content for potential plagiarism and ensure originality", icon: <FastForwardIcon className="size-5 stroke-1" /> },
+    { title: "AI Chat Assistant", description: "Get instant help with writing, research, and creative tasks using Gemini 3 Pro", icon: <RocketIcon className="size-5 stroke-1" /> },
+    { title: "Multi-Language Support", description: "Translate and work with content in 50+ languages seamlessly", icon: <LanguagesIcon className="size-5 stroke-1" /> },
+    { title: "AI Image Generator", description: "Create stunning images from text descriptions using Pollinations AI", icon: <SquarePenIcon className="size-5 stroke-1" /> },
   ],
   className,
 }: ItemsProps) {

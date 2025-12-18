@@ -16,6 +16,7 @@ import AIImageGenerator from "./pages/AIImageGenerator";
 import Translate from "./pages/Translate";
 import Summarizer from "./pages/Summarizer";
 import CitationGenerator from "./pages/CitationGenerator";
+import Contact from "./pages/Contact";
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
             <Route path="/translate" element={<Translate />} />
             <Route path="/summarizer" element={<Summarizer />} />
             <Route path="/citation-generator" element={<CitationGenerator />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/account" element={<Account />} />
           </Routes>
         </ThemeProvider>

@@ -10,13 +10,13 @@ interface FooterProps { logo?: ReactNode; name?: string; columns?: FooterColumnP
 
 export default function FooterSection({
   logo = <LaunchUI />,
-  name = "Otisium",
+  name = "ReText",
   columns = [
-    { title: "Product", links: [{ text: "Changelog", href: "#" }, { text: "Documentation", href: "#" }] },
-    { title: "Company", links: [{ text: "About", href: "#" }, { text: "Careers", href: "#" }, { text: "Blog", href: "#" }] },
-    { title: "Contact", links: [{ text: "Discord", href: "#" }, { text: "Twitter", href: "#" }, { text: "Github", href: "#" }] },
+    { title: "Tools", links: [{ text: "AI Detector", href: "/ai-detector" }, { text: "Paraphraser", href: "/paraphraser" }, { text: "Grammar Checker", href: "/grammar-checker" }, { text: "AI Humanizer", href: "/ai-humanizer" }] },
+    { title: "More Tools", links: [{ text: "AI Chat", href: "/ai-chat" }, { text: "Translator", href: "/translate" }, { text: "Summarizer", href: "/summarizer" }, { text: "Image Generator", href: "/ai-image-generator" }] },
+    { title: "Support", links: [{ text: "Contact Us", href: "/contact" }, { text: "Login", href: "/login" }, { text: "Sign Up", href: "/signup" }] },
   ],
-  copyright = "© 2025 Otisium. All rights reserved",
+  copyright = "© 2025 ReText. All rights reserved",
   policies = [{ text: "Privacy Policy", href: "#" }, { text: "Terms of Service", href: "#" }],
   showModeToggle = true,
   className,

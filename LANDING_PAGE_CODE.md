@@ -103,7 +103,7 @@ export default config;
 ### config/site.ts
 ```typescript
 export const siteConfig = {
-  name: "Otisium",
+  name: "ReText",
   url: "https://launchuicomponents.com",
   getStartedUrl: "https://launchuicomponents.com/docs/getting-started/introduction",
   ogImage: "https://launchuicomponents.com/og.jpg",
@@ -1324,7 +1324,7 @@ export default function Navigation({
     { title: "Tooltip", href: "/docs/primitives/tooltip", description: "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it." },
   ],
   logo = <LaunchUI />,
-  logoTitle = "Otisium",
+  logoTitle = "ReText",
   logoDescription = "Landing page template built with React, Shadcn/ui and Tailwind that you can copy/paste into your project.",
   logoHref = "#",
   introItems = [
@@ -1498,7 +1498,7 @@ interface NavbarProps { logo?: ReactNode; name?: string; homeUrl?: string; mobil
 
 export default function Navbar({
   logo = <LaunchUI />,
-  name = "Otisium",
+  name = "ReText",
   homeUrl = "#",
   mobileLinks = [
     { text: "Getting Started", href: "#" },
@@ -1577,8 +1577,8 @@ interface HeroProps { title?: string; description?: string; mockup?: ReactNode |
 export default function Hero({
   title = "Give your big idea the design it deserves",
   description = "Professionally designed blocks and templates built with React, Shadcn/ui and Tailwind that will help your product stand out.",
-  mockup = <Screenshot srcLight="/dashboard-light.png" srcDark="/dashboard-dark.png" alt="Otisium app screenshot" width={1248} height={765} className="w-full" />,
-  badge = <Badge variant="outline" className="animate-appear"><span className="text-muted-foreground">New version of Otisium is out!</span><a href="#" className="flex items-center gap-1">Get started<ArrowRightIcon className="size-3" /></a></Badge>,
+  mockup = <Screenshot srcLight="/dashboard-light.png" srcDark="/dashboard-dark.png" alt="ReText app screenshot" width={1248} height={765} className="w-full" />,
+  badge = <Badge variant="outline" className="animate-appear"><span className="text-muted-foreground">New version of ReText is out!</span><a href="#" className="flex items-center gap-1">Get started<ArrowRightIcon className="size-3" /></a></Badge>,
   buttons = [
     { href: "#", text: "Get Started", variant: "default" },
     { href: "#", text: "Github", variant: "glow", icon: <Github className="mr-2 size-4" /> },
@@ -1827,23 +1827,23 @@ export default function FAQ({
   items = [
     {
       question: "Why building a great landing page is critical for your business?",
-      answer: (<><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">In today&apos;s AI-driven world, standing out is harder than ever. While anyone can build a product, a professional landing page makes the difference between success and failure.</p><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">Otisium helps you ship faster without compromising on quality.</p></>),
+      answer: (<><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">In today&apos;s AI-driven world, standing out is harder than ever. While anyone can build a product, a professional landing page makes the difference between success and failure.</p><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">ReText helps you ship faster without compromising on quality.</p></>),
     },
     {
-      question: "Why use Otisium instead of a no-code tool?",
-      answer: (<><p className="text-muted-foreground mb-4 max-w-[600px]">No-code tools lock you into their ecosystem with recurring fees and limited control. They often come with performance issues and make it difficult to integrate with your product.</p><p className="text-muted-foreground mb-4 max-w-[600px]">You can&apos;t even change your hosting provider and basic things like web analytics come as extra costs and paid add-ons.</p><p className="text-muted-foreground mb-4 max-w-[600px]">What might seem like a convenient solution today could paint you into a corner tomorrow, limiting your ability to scale and adapt. Otisium gives you full control of your code while maintaining professional quality.</p></>),
+      question: "Why use ReText instead of a no-code tool?",
+      answer: (<><p className="text-muted-foreground mb-4 max-w-[600px]">No-code tools lock you into their ecosystem with recurring fees and limited control. They often come with performance issues and make it difficult to integrate with your product.</p><p className="text-muted-foreground mb-4 max-w-[600px]">You can&apos;t even change your hosting provider and basic things like web analytics come as extra costs and paid add-ons.</p><p className="text-muted-foreground mb-4 max-w-[600px]">What might seem like a convenient solution today could paint you into a corner tomorrow, limiting your ability to scale and adapt. ReText gives you full control of your code while maintaining professional quality.</p></>),
     },
     {
-      question: "How Otisium is different from other components libraries and templates?",
-      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">Otisium stands out with premium design quality and delightful touches of custom animations and illustrations.</p><p className="text-muted-foreground mb-4 max-w-[580px]">All components are carefully crafted to help position your product as a professional tool, avoiding the generic template look.</p><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">Unlike many libraries that rely on outdated CSS practices and old dependencies, Otisium is built with modern technologies and best practices in mind.</p></>),
+      question: "How ReText is different from other components libraries and templates?",
+      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">ReText stands out with premium design quality and delightful touches of custom animations and illustrations.</p><p className="text-muted-foreground mb-4 max-w-[580px]">All components are carefully crafted to help position your product as a professional tool, avoiding the generic template look.</p><p className="text-muted-foreground mb-4 max-w-[640px] text-balance">Unlike many libraries that rely on outdated CSS practices and old dependencies, ReText is built with modern technologies and best practices in mind.</p></>),
     },
     {
       question: 'Why exactly does it mean that "The code is yours"?',
-      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">The basic version of Otisium is open-source and free forever, under a do-whatever-you-want license.</p><p className="text-muted-foreground mb-4 max-w-[580px]">The pro version that contains more components and options is a one-time purchase that gives you lifetime access to all current and future content. Use it for unlimited personal and commercial projects - no recurring fees or restrictions.</p><p className="text-muted-foreground mb-4 max-w-[580px]">For complete details about licensing and usage rights, check out <Link href="/pricing" className="text-foreground underline">the pricing page</Link>.</p></>),
+      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">The basic version of ReText is open-source and free forever, under a do-whatever-you-want license.</p><p className="text-muted-foreground mb-4 max-w-[580px]">The pro version that contains more components and options is a one-time purchase that gives you lifetime access to all current and future content. Use it for unlimited personal and commercial projects - no recurring fees or restrictions.</p><p className="text-muted-foreground mb-4 max-w-[580px]">For complete details about licensing and usage rights, check out <Link href="/pricing" className="text-foreground underline">the pricing page</Link>.</p></>),
     },
     {
       question: "Are Figma files included?",
-      answer: (<p className="text-muted-foreground mb-4 max-w-[580px]">Yes! The complete Otisium template is available for free on the <Link href="https://www.figma.com/community/file/1420131743903900629/launch-ui-landing-page-components-ui-kit" className="text-foreground underline">Figma community</Link>.</p>),
+      answer: (<p className="text-muted-foreground mb-4 max-w-[580px]">Yes! The complete ReText template is available for free on the <Link href="https://www.figma.com/community/file/1420131743903900629/launch-ui-landing-page-components-ui-kit" className="text-foreground underline">Figma community</Link>.</p>),
     },
     {
       question: "Can I get a discount?",
@@ -1927,13 +1927,13 @@ interface FooterProps { logo?: ReactNode; name?: string; columns?: FooterColumnP
 
 export default function FooterSection({
   logo = <LaunchUI />,
-  name = "Otisium",
+  name = "ReText",
   columns = [
     { title: "Product", links: [{ text: "Changelog", href: "#" }, { text: "Documentation", href: "#" }] },
     { title: "Company", links: [{ text: "About", href: "#" }, { text: "Careers", href: "#" }, { text: "Blog", href: "#" }] },
     { title: "Contact", links: [{ text: "Discord", href: "#" }, { text: "Twitter", href: "#" }, { text: "Github", href: "#" }] },
   ],
-  copyright = "© 2025 Otisium. All rights reserved",
+  copyright = "© 2025 ReText. All rights reserved",
   policies = [{ text: "Privacy Policy", href: "#" }, { text: "Terms of Service", href: "#" }],
   showModeToggle = true,
   className,

@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Otisium",
+  name: "ReText",
   url: "https://launchuicomponents.com",
   getStartedUrl: "https://launchuicomponents.com/docs/getting-started/introduction",
   ogImage: "https://launchuicomponents.com/og.jpg",

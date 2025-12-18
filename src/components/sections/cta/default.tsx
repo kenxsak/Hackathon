@@ -9,8 +9,8 @@ interface CTAButtonProps { href: string; text: string; variant?: VariantProps<ty
 interface CTAProps { title?: string; buttons?: CTAButtonProps[] | false; className?: string; }
 
 export default function CTA({
-  title = "Start building",
-  buttons = [{ href: "#", text: "Get Started", variant: "default" }],
+  title = "Ready to enhance your writing with AI?",
+  buttons = [{ href: "/signup", text: "Get Started Free", variant: "default" }],
   className,
 }: CTAProps) {
   return (
