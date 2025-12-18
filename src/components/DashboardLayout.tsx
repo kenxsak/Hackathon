@@ -26,22 +26,22 @@ const SidebarIcon = ({ className }: { className?: string }) => (
 type User = { name: string; email: string; picture?: string };
 
 const sidebarTools = [
-  { icon: RefreshCw, label: "Paraphraser", path: "/dashboard/paraphraser" },
-  { icon: SpellCheck, label: "Grammar Checker", path: "/dashboard/grammar" },
-  { icon: ScanSearch, label: "AI Detector", path: "/dashboard" },
-  { icon: Shield, label: "Plagiarism Checker", path: "/dashboard/plagiarism" },
-  { icon: Bot, label: "AI Humanizer", path: "/dashboard/humanizer" },
-  { icon: MessageSquare, label: "AI Chat", path: "/dashboard/chat" },
-  { icon: ImageIcon, label: "AI Image Generator", path: "/dashboard/image" },
-  { icon: Languages, label: "Translate", path: "/dashboard/translate" },
-  { icon: FileText, label: "Summarizer", path: "/dashboard/summarizer" },
-  { icon: Quote, label: "Citation Generator", path: "/dashboard/citation" },
+  { icon: RefreshCw, label: "Paraphraser", path: "/paraphraser" },
+  { icon: SpellCheck, label: "Grammar Checker", path: "/grammar-checker" },
+  { icon: ScanSearch, label: "AI Detector", path: "/ai-detector" },
+  { icon: Shield, label: "Plagiarism Checker", path: "/plagiarism-checker" },
+  { icon: Bot, label: "AI Humanizer", path: "/ai-humanizer" },
+  { icon: MessageSquare, label: "AI Chat", path: "/ai-chat" },
+  { icon: ImageIcon, label: "AI Image Generator", path: "/ai-image-generator" },
+  { icon: Languages, label: "Translate", path: "/translate" },
+  { icon: FileText, label: "Summarizer", path: "/summarizer" },
+  { icon: Quote, label: "Citation Generator", path: "/citation-generator" },
 ];
 
-const sidebarExtras = [{ icon: Crown, label: "Otisium Premium", path: "/dashboard/premium" }];
+const sidebarExtras = [{ icon: Crown, label: "Otisium Premium", path: "/premium" }];
 const sidebarBottom = [
-  { icon: HelpCircle, label: "Help Center", path: "/dashboard/help" },
-  { icon: Mail, label: "Contact us", path: "/dashboard/contact" },
+  { icon: HelpCircle, label: "Help Center", path: "/help" },
+  { icon: Mail, label: "Contact us", path: "/contact" },
 ];
 
 interface DashboardLayoutProps {

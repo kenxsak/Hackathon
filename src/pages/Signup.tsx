@@ -56,7 +56,7 @@ export default function Signup() {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/dashboard");
+      navigate("/ai-detector");
     } catch (err: any) {
       setError(err.message);
     } finally {
