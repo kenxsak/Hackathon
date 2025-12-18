@@ -1,495 +1,151 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
 import { motion } from "motion/react";
-import {
-  LayoutDashboard,
-  Users,
-  Settings,
-  BarChart3,
-  FileText,
-  Bell,
-  X,
-  LogOut,
-  Wallet,
-  HelpCircle,
-  Monitor,
-  Sun,
-  Moon,
-} from "lucide-react";
+import { Upload, ClipboardPaste, Info, ChevronDown, ChevronUp, MessageSquare } from "lucide-react";
+import DashboardLayout from "../components/DashboardLayout";
 import { useTheme } from "../components/contexts/theme-provider";
 
-const LogoIcon = ({ className }: { className?: string }) => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <path d="M10.5 12.75H3L6 9.75H9L15.75 3H20.25L10.5 12.75Z" fill="currentColor" />
-    <path d="M11.25 15V13.5L21 3.75V5.25L11.25 15Z" fill="currentColor" />
-    <path d="M11.25 18V16.5L21 6.75V8.25L11.25 18Z" fill="currentColor" />
-    <path d="M11.25 21V19.5L15 15.75V17.25L11.25 21Z" fill="currentColor" />
-  </svg>
-);
-
-const SidebarIcon = ({ className }: { className?: string }) => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <path d="M6.83496 3.99992C6.38353 4.00411 6.01421 4.0122 5.69824 4.03801C5.31232 4.06954 5.03904 4.12266 4.82227 4.20012L4.62207 4.28606C4.18264 4.50996 3.81498 4.85035 3.55859 5.26848L3.45605 5.45207C3.33013 5.69922 3.25006 6.01354 3.20801 6.52824C3.16533 7.05065 3.16504 7.71885 3.16504 8.66301V11.3271C3.16504 12.2712 3.16533 12.9394 3.20801 13.4618C3.25006 13.9766 3.33013 14.2909 3.45605 14.538L3.55859 14.7216C3.81498 15.1397 4.18266 15.4801 4.62207 15.704L4.82227 15.79C5.03904 15.8674 5.31234 15.9205 5.69824 15.9521C6.01398 15.9779 6.383 15.986 6.83398 15.9902L6.83496 3.99992ZM18.165 11.3271C18.165 12.2493 18.1653 12.9811 18.1172 13.5702C18.0745 14.0924 17.9916 14.5472 17.8125 14.9648L17.7295 15.1415C17.394 15.8 16.8834 16.3511 16.2568 16.7353L15.9814 16.8896C15.5157 17.1268 15.0069 17.2285 14.4102 17.2773C13.821 17.3254 13.0893 17.3251 12.167 17.3251H7.83301C6.91071 17.3251 6.17898 17.3254 5.58984 17.2773C5.06757 17.2346 4.61294 17.1508 4.19531 16.9716L4.01855 16.8896C3.36014 16.5541 2.80898 16.0434 2.4248 15.4169L2.27051 15.1415C2.03328 14.6758 1.93158 14.167 1.88281 13.5702C1.83468 12.9811 1.83496 12.2493 1.83496 11.3271V8.66301C1.83496 7.74072 1.83468 7.00898 1.88281 6.41985C1.93157 5.82309 2.03329 5.31432 2.27051 4.84856L2.4248 4.57317C2.80898 3.94666 3.36012 3.436 4.01855 3.10051L4.19531 3.0175C4.61285 2.83843 5.06771 2.75548 5.58984 2.71281C6.17898 2.66468 6.91071 2.66496 7.83301 2.66496H12.167C13.0893 2.66496 13.821 2.66468 14.4102 2.71281C15.0069 2.76157 15.5157 2.86329 15.9814 3.10051L16.2568 3.25481C16.8833 3.63898 17.394 4.19012 17.7295 4.84856L17.8125 5.02531C17.9916 5.44285 18.0745 5.89771 18.1172 6.41985C18.1653 7.00898 18.165 7.74072 18.165 8.66301V11.3271ZM8.16406 15.995H12.167C13.1112 15.995 13.7794 15.9947 14.3018 15.9521C14.8164 15.91 15.1308 15.8299 15.3779 15.704L15.5615 15.6015C15.9797 15.3451 16.32 14.9774 16.5439 14.538L16.6299 14.3378C16.7074 14.121 16.7605 13.8478 16.792 13.4618C16.8347 12.9394 16.835 12.2712 16.835 11.3271V8.66301C16.835 7.71885 16.8347 7.05065 16.792 6.52824C16.7605 6.14232 16.7073 5.86904 16.6299 5.65227L16.5439 5.45207C16.32 5.01264 15.9796 4.64498 15.5615 4.3886L15.3779 4.28606C15.1308 4.16013 14.8165 4.08006 14.3018 4.03801C13.7794 3.99533 13.1112 3.99504 12.167 3.99504H8.16406C8.16407 3.99667 8.16504 3.99829 8.16504 3.99992L8.16406 15.995Z" />
-  </svg>
-);
-
-type User = {
-  name: string;
-  email: string;
-  picture?: string;
-};
-
-const sidebarItems = [
-  { icon: LayoutDashboard, label: "Dashboard", active: true },
-  { icon: BarChart3, label: "Analytics" },
-  { icon: Users, label: "Users" },
-  { icon: FileText, label: "Documents" },
-  { icon: Wallet, label: "Wallet" },
-  { icon: Settings, label: "Settings" },
-  { icon: HelpCircle, label: "Help" },
-];
+const languages = ["English", "French", "Spanish", "German"];
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      navigate("/login");
-      return;
-    }
-    setUser(JSON.parse(storedUser));
-  }, [navigate]);
+  const [selectedLanguage, setSelectedLanguage] = useState("English");
+  const [inputText, setInputText] = useState("");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [results, setResults] = useState<{ aiGenerated: number; humanRefined: number; humanWritten: number } | null>(null);
+  const [showUnderstanding, setShowUnderstanding] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/");
+  const wordCount = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
+  const minWords = 40;
+
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setInputText(text);
+      textareaRef.current?.focus();
+    } catch { console.error("Failed to read clipboard"); }
   };
 
-  if (!user) return null;
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => setInputText(event.target?.result as string);
+      reader.readAsText(file);
+    }
+  };
+
+  const handleDetect = async () => {
+    if (wordCount < minWords) return;
+    setIsAnalyzing(true);
+    setResults(null);
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    const ai = Math.floor(Math.random() * 60);
+    const refined = Math.floor(Math.random() * (100 - ai));
+    setResults({ aiGenerated: ai, humanRefined: refined, humanWritten: 100 - ai - refined });
+    setIsAnalyzing(false);
+  };
 
   return (
-    <div className={`min-h-screen flex ${isDark ? "bg-[#0a0a0a] text-white" : "bg-gray-50 text-gray-900"}`} style={{ fontFamily: "'Outfit', sans-serif" }}>
-      {/* Desktop Sidebar */}
-      <motion.aside
-        initial={{ width: sidebarOpen ? 256 : 64, opacity: 0 }}
-        animate={{ 
-          width: sidebarOpen ? 256 : 64, 
-          opacity: 1 
-        }}
-        transition={{ 
-          width: { duration: 0.2, ease: [0.4, 0, 0.2, 1] },
-          opacity: { duration: 0.3 }
-        }}
-        className={`hidden md:flex flex-col fixed left-0 top-0 h-full z-40 ${isDark ? "bg-[#111] border-r border-gray-800" : "bg-white border-r border-gray-200"}`}
-      >
-        {/* Logo */}
-        <div className={`flex items-center justify-between ${sidebarOpen ? "p-4" : "p-2 justify-center"}`}>
-          {sidebarOpen && (
-            <LogoIcon className={`w-7 h-7 ${isDark ? "text-white" : "text-gray-900"}`} />
-          )}
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className={`p-2 rounded-lg transition-colors ${isDark ? "hover:bg-gray-800" : "hover:bg-gray-100"}`}
-          >
-            <SidebarIcon className="w-5 h-5" />
-          </button>
+    <DashboardLayout title="AI Detector">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h2 className={`text-2xl md:text-3xl font-bold mb-3 ${isDark ? "text-white" : "text-gray-900"}`}>Trusted AI Detector & AI Checker</h2>
+          <p className={`text-sm md:text-base max-w-2xl mx-auto ${isDark ? "text-zinc-400" : "text-gray-600"}`}>Paste your text below to check if it was written by AI. Our AI Detector is trained on GPT-4, Gemini, Claude, and Llama.</p>
         </div>
 
-        {/* Nav Items */}
-        <nav className={`flex-1 space-y-1 ${sidebarOpen ? "p-4" : "p-2"}`}>
-          {sidebarItems.map((item, index) => (
-            <button
-              key={index}
-              className={`w-full flex items-center rounded-lg transition-colors ${
-                sidebarOpen ? "gap-3 px-3 py-2.5" : "justify-center p-2"
-              } ${
-                item.active
-                  ? isDark ? "bg-zinc-800 text-white" : "bg-gray-100 text-gray-900"
-                  : isDark ? "text-gray-400 hover:bg-zinc-800/50 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              <item.icon className="w-5 h-5 flex-shrink-0" />
-              {sidebarOpen && <span className="text-sm">{item.label}</span>}
-            </button>
+        {/* Language Tabs */}
+        <div className={`flex items-center gap-1 mb-6 overflow-x-auto pb-2 border-b ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
+          {languages.map((lang) => (
+            <button key={lang} onClick={() => setSelectedLanguage(lang)} className={`px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap ${selectedLanguage === lang ? (isDark ? "text-white border-b-2 border-white -mb-[2px]" : "text-gray-900 border-b-2 border-gray-900 -mb-[2px]") : (isDark ? "text-zinc-500 hover:text-white" : "text-gray-500 hover:text-gray-900")}`}>{lang}</button>
           ))}
-        </nav>
+          <button className={`px-4 py-2 text-sm font-medium flex items-center gap-1 ${isDark ? "text-zinc-500 hover:text-white" : "text-gray-500 hover:text-gray-900"}`}>All <ChevronDown className="w-4 h-4" /></button>
+        </div>
 
-        {/* User Section */}
-        <div className={`sticky bottom-0 z-30 py-1.5 border-t ${isDark ? "bg-[#111] border-gray-800/30" : "bg-white border-gray-200"} ${!sidebarOpen && "px-1"}`}>
-          <div className={sidebarOpen ? "px-2" : "px-1"}>
-            <div className="relative">
-              <div className="group relative">
-                <button
-                  type="button"
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className={`flex items-center w-full rounded-xl border transition-all duration-200 focus:outline-none ${
-                    sidebarOpen ? "gap-3 px-3 py-2" : "justify-center p-1.5"
-                  } ${isDark ? "bg-zinc-900 border-zinc-800/60 hover:border-zinc-700 hover:bg-zinc-800/40" : "bg-gray-50 border-gray-200 hover:border-gray-300 hover:bg-gray-100"}`}
-                >
-                  {sidebarOpen && (
-                    <div className="text-left flex-1 min-w-0">
-                      <div className={`text-sm font-medium tracking-tight leading-tight truncate ${isDark ? "text-zinc-100" : "text-gray-900"}`}>
-                        {user.name}
+        {/* Main Tool Card */}
+        <div className={`border rounded-2xl overflow-hidden ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
+          <div className="flex flex-col lg:flex-row">
+            {/* Input Section */}
+            <div className={`flex-1 ${isDark ? "bg-[#111]" : "bg-white"}`}>
+              <div className={`px-6 py-4 border-b ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
+                <div className="flex items-center gap-3">
+                  <button onClick={handlePaste} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isDark ? "text-zinc-300 hover:bg-zinc-800" : "text-gray-700 hover:bg-gray-100"}`}><ClipboardPaste className="w-4 h-4" />Paste text</button>
+                  <input ref={fileInputRef} type="file" accept=".txt,.doc,.docx,.pdf" onChange={handleFileUpload} className="hidden" />
+                  <button onClick={() => fileInputRef.current?.click()} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isDark ? "text-zinc-300 hover:bg-zinc-800" : "text-gray-700 hover:bg-gray-100"}`}><Upload className="w-4 h-4" />Upload doc</button>
+                </div>
+              </div>
+              <div className="p-6">
+                <textarea ref={textareaRef} value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="To analyze text, add at least 40 words." className={`w-full h-64 resize-none rounded-xl p-4 text-sm focus:outline-none focus:ring-2 transition-all ${isDark ? "bg-zinc-900 text-white placeholder-zinc-500 border border-zinc-800 focus:ring-zinc-700 focus:border-zinc-700" : "bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 focus:ring-gray-300 focus:border-gray-300"}`} />
+                <div className="flex items-center justify-between mt-4">
+                  <div className={`text-sm ${isDark ? "text-zinc-500" : "text-gray-500"}`}>{wordCount} / {minWords} words minimum</div>
+                  <button onClick={handleDetect} disabled={wordCount < minWords || isAnalyzing} className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all ${wordCount >= minWords && !isAnalyzing ? "bg-emerald-500 hover:bg-emerald-600 text-white" : (isDark ? "bg-zinc-800 text-zinc-500 cursor-not-allowed" : "bg-gray-200 text-gray-400 cursor-not-allowed")}`}>{isAnalyzing ? "Analyzing..." : "Detect AI"}</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Results Section */}
+            <div className={`w-full lg:w-96 p-6 ${isDark ? "bg-zinc-900/50 border-t lg:border-t-0 lg:border-l border-zinc-800" : "bg-gray-50 border-t lg:border-t-0 lg:border-l border-gray-200"}`}>
+              {!results && !isAnalyzing && (
+                <div className="flex flex-col items-center justify-center h-full py-12">
+                  <p className={`text-sm ${isDark ? "text-zinc-500" : "text-gray-500"}`}>Add text to begin analysis</p>
+                </div>
+              )}
+              {isAnalyzing && (
+                <div className="flex flex-col items-center justify-center h-full py-12 gap-3">
+                  <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                  <p className={`text-sm ${isDark ? "text-zinc-400" : "text-gray-600"}`}>Analyzing your text...</p>
+                </div>
+              )}
+              {results && !isAnalyzing && (
+                <div className="space-y-5">
+                  {[
+                    { label: "AI-generated", value: results.aiGenerated, color: "bg-amber-400", tooltip: "Text likely generated by AI, like ChatGPT or Gemini." },
+                    { label: "Human-written & AI-refined", value: results.humanRefined, color: "bg-blue-400", tooltip: "Text likely written by humans, then refined using AI tools." },
+                    { label: "Human-written", value: results.humanWritten, color: "bg-emerald-400", tooltip: "Text likely written by humans without AI help." },
+                  ].map((item, index) => (
+                    <div key={index}>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-1.5">
+                          <span className={`text-sm ${isDark ? "text-zinc-400" : "text-gray-600"}`}>{item.label}</span>
+                          <span title={item.tooltip}><Info className={`w-3.5 h-3.5 cursor-help ${isDark ? "text-zinc-600" : "text-gray-400"}`} /></span>
+                        </div>
+                        <span className={`text-sm font-semibold font-mono ${isDark ? "text-white" : "text-gray-900"}`}>{item.value}%</span>
                       </div>
-                      <div className={`text-xs tracking-tight leading-tight truncate ${isDark ? "text-zinc-400" : "text-gray-500"}`}>
-                        {user.email}
+                      <div className={`h-2 rounded-full overflow-hidden ${isDark ? "bg-zinc-800" : "bg-gray-200"}`}>
+                        <motion.div initial={{ width: 0 }} animate={{ width: `${item.value}%` }} transition={{ duration: 0.5, delay: index * 0.1 }} className={`h-full rounded-full ${item.color}`} />
                       </div>
                     </div>
-                  )}
-                  <div className="relative flex-shrink-0">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 p-0.5">
-                      <div className={`w-full h-full rounded-full overflow-hidden ${isDark ? "bg-zinc-900" : "bg-white"}`}>
-                        {user.picture ? (
-                          <img
-                            src={user.picture}
-                            alt={user.name}
-                            className="w-full h-full object-cover rounded-full"
-                            referrerPolicy="no-referrer"
-                          />
-                        ) : (
-                          <div className={`w-full h-full flex items-center justify-center text-sm font-medium ${isDark ? "text-white" : "text-gray-900"}`}>
-                            {user.name?.charAt(0).toUpperCase() || "U"}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                  ))}
+                </div>
+              )}
+              {/* Understanding Results */}
+              <div className={`mt-6 pt-4 border-t ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
+                <button onClick={() => setShowUnderstanding(!showUnderstanding)} className={`flex items-center gap-2 text-sm font-medium ${isDark ? "text-zinc-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
+                  {showUnderstanding ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  Understanding your results
                 </button>
-                {sidebarOpen && (
-                  <div className="absolute -right-3 top-1/2 -translate-y-1/2 transition-all duration-200 opacity-60 group-hover:opacity-100">
-                    <svg
-                      width="12"
-                      height="24"
-                      viewBox="0 0 12 24"
-                      fill="none"
-                      className={`transition-all duration-200 ${isDark ? "text-zinc-500 group-hover:text-zinc-300" : "text-gray-400 group-hover:text-gray-600"}`}
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M2 4C6 8 6 16 2 20"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        fill="none"
-                      />
-                    </svg>
-                  </div>
-                )}
-
-                {/* Dropdown Menu */}
-                {userMenuOpen && (
-                  <>
-                    <div 
-                      className="fixed inset-0 z-40" 
-                      onClick={() => setUserMenuOpen(false)}
-                    />
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                      transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
-                      className={`absolute bottom-full left-0 right-0 mb-2 z-50 rounded-xl shadow-lg overflow-hidden ${isDark ? "bg-[#0a0a0a] border border-zinc-800" : "bg-white border border-gray-200"}`}
-                    >
-                      <div className="p-1">
-                        <button
-                          onClick={() => {
-                            setUserMenuOpen(false);
-                            navigate("/account");
-                          }}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${isDark ? "text-zinc-300 hover:bg-zinc-800 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"}`}
-                        >
-                          <Settings className="w-4 h-4" />
-                          Account
-                        </button>
-                        <button
-                          onClick={() => {
-                            setUserMenuOpen(false);
-                            handleLogout();
-                          }}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${isDark ? "text-zinc-300 hover:bg-zinc-800 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"}`}
-                        >
-                          <LogOut className="w-4 h-4" />
-                          Logout
-                        </button>
-                      </div>
-                      <div className={`border-t ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
-                        <div className="flex items-center justify-between px-3 py-2.5">
-                          <span className={`text-sm font-medium tracking-tight ${isDark ? "text-zinc-100" : "text-gray-900"}`}>Theme</span>
-                          <div className={`flex items-center gap-0.5 p-0.5 rounded-full ring-1 ${isDark ? "bg-[#0a0a0a] ring-zinc-800" : "bg-gray-100 ring-gray-200"}`}>
-                            <button
-                              onClick={() => setTheme("system")}
-                              className={`p-1.5 rounded-full transition-all ${theme === "system" ? (isDark ? "bg-zinc-700 shadow-sm" : "bg-white shadow-sm") : (isDark ? "hover:bg-zinc-700" : "hover:bg-gray-200")}`}
-                              title="System"
-                            >
-                              <Monitor className={`w-3.5 h-3.5 ${isDark ? "text-zinc-400" : "text-gray-500"}`} />
-                            </button>
-                            <button
-                              onClick={() => setTheme("light")}
-                              className={`p-1.5 rounded-full transition-all ${theme === "light" ? (isDark ? "bg-zinc-700 shadow-sm" : "bg-white shadow-sm") : (isDark ? "hover:bg-zinc-700" : "hover:bg-gray-200")}`}
-                              title="Light"
-                            >
-                              <Sun className={`w-3.5 h-3.5 ${isDark ? "text-zinc-400" : "text-gray-500"}`} />
-                            </button>
-                            <button
-                              onClick={() => setTheme("dark")}
-                              className={`p-1.5 rounded-full transition-all ${theme === "dark" ? (isDark ? "bg-zinc-700 shadow-sm" : "bg-white shadow-sm") : (isDark ? "hover:bg-zinc-700" : "hover:bg-gray-200")}`}
-                              title="Dark"
-                            >
-                              <Moon className={`w-3.5 h-3.5 ${isDark ? "text-zinc-400" : "text-gray-500"}`} />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </>
+                {showUnderstanding && (
+                  <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className={`mt-3 text-xs leading-relaxed ${isDark ? "text-zinc-500" : "text-gray-500"}`}>
+                    Our AI detector flags text that may be AI-generated. Use your best judgment when reviewing results. Never rely on AI detection alone to make decisions that could impact someone's career or academic standing.
+                  </motion.p>
                 )}
               </div>
             </div>
           </div>
         </div>
-      </motion.aside>
 
-      {/* Mobile Sidebar Overlay */}
-      {mobileMenuOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black/60 z-40"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
-
-      {/* Mobile Sidebar */}
-      <motion.aside
-        initial={{ x: "-100%" }}
-        animate={{ x: mobileMenuOpen ? 0 : "-100%" }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        className={`md:hidden fixed left-0 top-0 h-full w-64 z-50 flex flex-col ${isDark ? "bg-[#111] border-r border-gray-800" : "bg-white border-r border-gray-200"}`}
-      >
-        <div className="p-4 flex items-center justify-between">
-          <LogoIcon className={`w-7 h-7 ${isDark ? "text-white" : "text-gray-900"}`} />
-          <button
-            onClick={() => setMobileMenuOpen(false)}
-            className={`p-2 rounded-lg ${isDark ? "hover:bg-gray-800" : "hover:bg-gray-100"}`}
-          >
-            <X className="w-5 h-5" />
+        {/* Feedback Button */}
+        <div className="fixed right-4 bottom-4 md:right-8 md:bottom-8">
+          <button className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-colors ${isDark ? "bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700" : "bg-white hover:bg-gray-50 text-gray-900 border border-gray-200"}`}>
+            <MessageSquare className="w-4 h-4" />
+            <span className="text-sm font-medium">Feedback</span>
           </button>
         </div>
-        <nav className="flex-1 p-4 space-y-1">
-          {sidebarItems.map((item, index) => (
-            <button
-              key={index}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                item.active
-                  ? isDark ? "bg-zinc-800 text-white" : "bg-gray-100 text-gray-900"
-                  : isDark ? "text-gray-400 hover:bg-zinc-800/50 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              <item.icon className="w-5 h-5" />
-              <span className="text-sm">{item.label}</span>
-            </button>
-          ))}
-        </nav>
-      </motion.aside>
-
-      {/* Main Content */}
-      <div 
-        className={`flex-1 transition-[margin] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] ${sidebarOpen ? "md:ml-64" : "md:ml-16"}`}
-      >
-        {/* Top Header */}
-        <header className={`sticky top-0 z-30 backdrop-blur-lg ${isDark ? "bg-[#0a0a0a]/80" : "bg-gray-50/80"}`}>
-          <div className="flex items-center justify-between px-4 md:px-6 py-4">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setMobileMenuOpen(true)}
-                className={`md:hidden p-2 rounded-lg ${isDark ? "hover:bg-gray-800" : "hover:bg-gray-200"}`}
-              >
-                <SidebarIcon className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="flex items-center gap-3">
-              <button className={`p-2 rounded-lg relative ${isDark ? "hover:bg-gray-800" : "hover:bg-gray-200"}`}>
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full" />
-              </button>
-              <button
-                onClick={handleLogout}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${isDark ? "text-gray-400 hover:bg-gray-800 hover:text-white" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"}`}
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden sm:inline">Logout</span>
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {/* Dashboard Content */}
-        <main className="p-4 md:p-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Getting Started Card */}
-            <div className={`border rounded-2xl overflow-hidden ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
-              {/* Header */}
-              <div className={`px-6 py-4 border-b ${isDark ? "bg-zinc-900 border-zinc-800" : "bg-gray-50 border-gray-200"}`}>
-                <p className={`font-medium text-base ${isDark ? "text-white" : "text-gray-900"}`}>
-                  Hey {user.name?.split(" ")[0]}, let's get started
-                </p>
-                <p className={`font-normal text-sm ${isDark ? "text-zinc-500" : "text-gray-500"}`}>
-                  Follow these steps to set up your account and start using the platform.
-                </p>
-              </div>
-
-              {/* Steps */}
-              <div className={isDark ? "bg-[#0a0a0a]" : "bg-white"}>
-                {[
-                  {
-                    step: 1,
-                    title: "Complete your profile",
-                    description: "Add your details to personalize your experience.",
-                    status: "Completed",
-                    statusColor: "emerald",
-                    buttonText: "View Profile",
-                  },
-                  {
-                    step: 2,
-                    title: "Connect your wallet",
-                    description: "Link your crypto wallet to enable transactions and payments.",
-                    status: "Pending",
-                    statusColor: "amber",
-                    buttonText: "Connect Wallet",
-                  },
-                  {
-                    step: 3,
-                    title: "Verify your identity",
-                    description: "Complete KYC verification to unlock all platform features.",
-                    status: "Not Started",
-                    statusColor: "rose",
-                    buttonText: "Start Verification",
-                  },
-                  {
-                    step: 4,
-                    title: "Make your first transaction",
-                    description: "Send or receive your first payment to get started.",
-                    status: "Locked",
-                    statusColor: "zinc",
-                    buttonText: "Coming Soon",
-                  },
-                ].map((item, index) => (
-                  <div key={index} className={`border-b last:border-0 ${isDark ? "border-zinc-800" : "border-gray-200"}`}>
-                    <div className="flex items-start gap-6 px-6 py-6">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${isDark ? "bg-zinc-800" : "bg-gray-100"}`}>
-                        <span className={`font-medium text-base font-mono text-center ${isDark ? "text-white" : "text-gray-900"}`}>
-                          {item.step}
-                        </span>
-                      </div>
-                      <div className="space-y-4 flex-1">
-                        <div>
-                          <div className="flex items-center gap-4 mb-2">
-                            <p className={`font-medium text-base ${isDark ? "text-white" : "text-gray-900"}`}>{item.title}</p>
-                            <span className="flex items-center gap-2">
-                              <span
-                                className={`w-2.5 h-2.5 rounded-full ${
-                                  item.statusColor === "emerald"
-                                    ? "bg-emerald-400 border-emerald-600"
-                                    : item.statusColor === "amber"
-                                    ? "bg-amber-400 border-amber-600"
-                                    : item.statusColor === "rose"
-                                    ? "bg-rose-400 border-rose-600"
-                                    : "bg-zinc-500 border-zinc-600"
-                                } border-[1.5px]`}
-                              />
-                              <span className={`font-semibold text-xs tracking-wide font-mono uppercase ${isDark ? "text-zinc-400" : "text-gray-500"}`}>
-                                {item.status}
-                              </span>
-                            </span>
-                          </div>
-                          <p className={`font-normal text-sm ${isDark ? "text-zinc-500" : "text-gray-500"}`}>{item.description}</p>
-                        </div>
-                        <button
-                          className={`group cursor-pointer flex items-center justify-center font-semibold font-mono uppercase border transition-all ease-in duration-75 text-xs leading-4 rounded-lg px-3 py-1 h-7 ${
-                            item.statusColor === "zinc"
-                              ? "text-zinc-500 bg-zinc-800/50 border-zinc-700 cursor-not-allowed"
-                              : "text-zinc-900 bg-white border-zinc-300 hover:bg-zinc-100 active:scale-95"
-                          }`}
-                          disabled={item.statusColor === "zinc"}
-                        >
-                          {item.buttonText}
-                          {item.statusColor !== "zinc" && (
-                            <span className="ml-1">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="14"
-                                height="14"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                              >
-                                <path
-                                  d="M5 12H19.5833M19.5833 12L12.5833 5M19.5833 12L12.5833 19"
-                                  stroke="currentColor"
-                                  strokeWidth="1.5"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                            </span>
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-              {[
-                { label: "Total Balance", value: "$0.00", icon: Wallet },
-                { label: "Transactions", value: "0", icon: BarChart3 },
-                { label: "Documents", value: "0", icon: FileText },
-                { label: "Connections", value: "0", icon: Users },
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`p-4 rounded-xl border ${isDark ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-gray-200"}`}
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className={`text-sm ${isDark ? "text-zinc-500" : "text-gray-500"}`}>{stat.label}</span>
-                    <stat.icon className={`w-4 h-4 ${isDark ? "text-zinc-600" : "text-gray-400"}`} />
-                  </div>
-                  <p className={`text-2xl font-bold ${isDark ? "text-white" : "text-gray-900"}`}>{stat.value}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </main>
-      </div>
-    </div>
+      </motion.div>
+    </DashboardLayout>
   );
 }

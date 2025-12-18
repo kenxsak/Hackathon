@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import AuthCallback from "./pages/AuthCallback";
 import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
+import Paraphraser from "./pages/Paraphraser";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/paraphraser" element={<Paraphraser />} />
             <Route path="/account" element={<Account />} />
           </Routes>
         </ThemeProvider>
