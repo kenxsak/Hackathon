@@ -23,7 +23,7 @@ export default function FAQ({
     },
     {
       question: "What writing tools are included?",
-      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">ReText includes a comprehensive suite of AI-powered writing tools:</p><ul className="text-muted-foreground mb-4 max-w-[580px] list-disc list-inside space-y-1"><li>AI Content Detector with  analysis</li><li>AI Humanizer to make text sound natural</li><li>Smart Paraphraser with multiple modes</li><li>Grammar & Spelling Checker</li><li>Plagiarism Checker</li><li>AI Chat Assistant</li><li>Multi-language Translator (50+ languages)</li><li>Text Summarizer</li><li>AI Image Generator</li></ul></>),
+      answer: (<><p className="text-muted-foreground mb-4 max-w-[580px]">ReText includes a comprehensive suite of AI Text Detector tools:</p><ul className="text-muted-foreground mb-4 max-w-[580px] list-disc list-inside space-y-1"><li>AI Content Detector with  analysis</li><li>AI Humanizer to make text sound natural</li><li>Smart Paraphraser with multiple modes</li><li>Grammar & Spelling Checker</li><li>Plagiarism Checker</li><li>AI Chat Assistant</li><li>Multi-language Translator (50+ languages)</li><li>Text Summarizer</li><li>AI Image Generator</li></ul></>),
     },
     {
       question: "Is ReText free to use?",

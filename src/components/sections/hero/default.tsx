@@ -13,7 +13,7 @@ interface HeroButtonProps { href: string; text: string; variant?: VariantProps<t
 interface HeroProps { title?: string; description?: string; mockup?: ReactNode | false; badge?: ReactNode | false; buttons?: HeroButtonProps[] | false; className?: string; }
 
 export default function Hero({
-  title = "AI-Powered Writing Assistant for Everyone",
+  title = "AI Text Detector for Authentic Content",
   description = "Detect AI-generated content with 98% accuracy, humanize your text, check grammar, and enhance your writing with our advanced AI tools powered by Gemini 3 Pro.",
   mockup = <Screenshot srcLight="/dashboard-light.png" srcDark="/dashboard-dark.png" alt="ReText AI Writing Assistant Dashboard" width={1248} height={765} className="w-full" />,
   badge = <AnimatedBadge text="🚀 Powered by Gemini 3 Pro Preview" color="#10b981" href="#" />,

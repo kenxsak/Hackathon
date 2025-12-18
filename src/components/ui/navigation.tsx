@@ -32,7 +32,7 @@ export default function Navigation({
   ],
   logo = <LaunchUI />,
   logoTitle = "ReText",
-  logoDescription = "AI-powered writing assistant with  AI detection, humanizer, and comprehensive writing tools.",
+  logoDescription = "AI Text Detector assistant with  AI detection, humanizer, and comprehensive writing tools.",
   logoHref = "/",
   introItems = [
     { title: "AI Detector", href: "/ai-detector", description: "Detect AI-generated content with 98% accuracy using  analysis." },
