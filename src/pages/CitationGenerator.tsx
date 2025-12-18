@@ -24,19 +24,42 @@ export default function CitationGenerator() {
   const handleSearch = async () => {
     if (!searchQuery.trim() || isSearching) return;
     setIsSearching(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
     
-    const newCitation: Citation = {
-      id: Date.now().toString(),
-      title: searchQuery,
-      authors: "Smith, J., & Johnson, M.",
-      year: "2024",
-      source: "Journal of Example Studies",
-      formatted: `Smith, J., & Johnson, M. (2024). ${searchQuery}. Journal of Example Studies, 15(3), 123-145.`
-    };
-    setCitations(prev => [...prev, newCitation]);
-    setSearchQuery("");
-    setIsSearching(false);
+    try {
+      const response = await fetch("http://localhost:3001/api/citation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          source: { 
+            title: searchQuery, 
+            type: "website",
+            year: new Date().getFullYear().toString()
+          }, 
+          style: citationStyle.split(" ")[0] // Extract style name (APA, MLA, etc.)
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Citation generation failed");
+      }
+
+      const newCitation: Citation = {
+        id: Date.now().toString(),
+        title: searchQuery,
+        authors: "Generated",
+        year: new Date().getFullYear().toString(),
+        source: "Web Source",
+        formatted: data.citation || `Citation for: ${searchQuery}`
+      };
+      setCitations(prev => [...prev, newCitation]);
+      setSearchQuery("");
+    } catch (err) {
+      console.error("Citation error:", err);
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const handleCopy = async (id: string, text: string) => {

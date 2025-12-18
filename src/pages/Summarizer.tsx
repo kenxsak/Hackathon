@@ -52,18 +52,32 @@ export default function Summarizer() {
   const handleSummarize = async () => {
     if (!inputText.trim() || isProcessing) return;
     setIsProcessing(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    const sentences = inputText.split(/[.!?]+/).filter(s => s.trim());
-    const summaryCount = length === "Short" ? 2 : length === "Medium" ? 4 : 6;
-    const summary = sentences.slice(0, Math.min(summaryCount, sentences.length));
-    
-    if (outputType === "bullets") {
-      setOutputText(summary.map(s => `• ${s.trim()}`).join("\n"));
-    } else {
-      setOutputText(summary.join(". ").trim() + ".");
+    setOutputText("");
+
+    try {
+      const response = await fetch("http://localhost:3001/api/summarize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          text: inputText, 
+          mode: outputType, 
+          length: length.toLowerCase() 
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Summarization failed");
+      }
+
+      setOutputText(data.summary || inputText);
+    } catch (err) {
+      console.error("Summarize error:", err);
+      setOutputText("Error: " + (err instanceof Error ? err.message : "Summarization failed"));
+    } finally {
+      setIsProcessing(false);
     }
-    setIsProcessing(false);
   };
 
   return (

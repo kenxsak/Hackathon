@@ -36,20 +36,35 @@ export default function AIChat() {
     setMessages(prev => [...prev, { role: "user", content: userMessage }]);
     setIsLoading(true);
 
-    // Simulate AI response
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    const responses = [
-      "I'd be happy to help you with that! Let me think about this...",
-      "That's a great question! Here's what I can tell you...",
-      "Based on my analysis, here are some insights...",
-    ];
-    
-    setMessages(prev => [...prev, { 
-      role: "assistant", 
-      content: responses[Math.floor(Math.random() * responses.length)] + "\n\nThis is a demo response. In production, this would connect to an AI backend to provide real assistance with brainstorming, writing, studying, and more."
-    }]);
-    setIsLoading(false);
+    try {
+      const response = await fetch("http://localhost:3001/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          message: userMessage, 
+          history: messages 
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Chat failed");
+      }
+
+      setMessages(prev => [...prev, { 
+        role: "assistant", 
+        content: data.response || "I couldn't generate a response. Please try again."
+      }]);
+    } catch (err) {
+      console.error("Chat error:", err);
+      setMessages(prev => [...prev, { 
+        role: "assistant", 
+        content: "Sorry, I encountered an error. Please try again."
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

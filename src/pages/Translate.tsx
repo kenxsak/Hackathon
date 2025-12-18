@@ -39,9 +39,32 @@ export default function Translate() {
   const handleTranslate = async () => {
     if (!inputText.trim() || isTranslating) return;
     setIsTranslating(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setOutputText(`[Translated to ${targetLang}]: ${inputText}`);
-    setIsTranslating(false);
+    setOutputText("");
+
+    try {
+      const response = await fetch("http://localhost:3001/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          text: inputText, 
+          sourceLang, 
+          targetLang 
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Translation failed");
+      }
+
+      setOutputText(data.translated_text || inputText);
+    } catch (err) {
+      console.error("Translation error:", err);
+      setOutputText("Error: " + (err instanceof Error ? err.message : "Translation failed"));
+    } finally {
+      setIsTranslating(false);
+    }
   };
 
   const handleCopy = async () => {

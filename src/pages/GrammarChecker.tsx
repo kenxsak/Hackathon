@@ -63,18 +63,40 @@ export default function GrammarChecker() {
   const handleCheck = async () => {
     if (!inputText.trim()) return;
     setIsChecking(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    // Mock grammar check results
-    setCorrections([
-      { type: "Grammar", count: Math.floor(Math.random() * 5) },
-      { type: "Spelling", count: Math.floor(Math.random() * 3) },
-      { type: "Punctuation", count: Math.floor(Math.random() * 4) },
-    ]);
-    setRecommendations([
-      "Consider using active voice for clearer sentences",
-      "Some sentences could be more concise",
-    ]);
-    setIsChecking(false);
+
+    try {
+      const response = await fetch("http://localhost:3001/api/grammar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: inputText }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Grammar check failed");
+      }
+
+      // Parse corrections from API response
+      const grammarCount = data.corrections?.filter((c: { type: string }) => c.type === "grammar").length || 0;
+      const spellingCount = data.corrections?.filter((c: { type: string }) => c.type === "spelling").length || 0;
+      const punctuationCount = data.corrections?.filter((c: { type: string }) => c.type === "punctuation").length || 0;
+
+      setCorrections([
+        { type: "Grammar", count: grammarCount },
+        { type: "Spelling", count: spellingCount },
+        { type: "Punctuation", count: punctuationCount },
+      ]);
+      setRecommendations(
+        data.corrections?.slice(0, 3).map((c: { explanation: string }) => c.explanation) || []
+      );
+    } catch (err) {
+      console.error("Grammar check error:", err);
+      setCorrections([]);
+      setRecommendations(["Error checking grammar. Please try again."]);
+    } finally {
+      setIsChecking(false);
+    }
   };
 
   return (

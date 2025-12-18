@@ -13,6 +13,7 @@ export default function PlagiarismChecker() {
   const [inputText, setInputText] = useState("");
   const [isScanning, setIsScanning] = useState(false);
   const [results, setResults] = useState<{ percentage: number; sources: { url: string; match: number }[] } | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState("English (US)");
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -53,17 +54,38 @@ export default function PlagiarismChecker() {
     if (!inputText.trim()) return;
     setIsScanning(true);
     setResults(null);
-    await new Promise(resolve => setTimeout(resolve, 2500));
-    // Mock plagiarism results
-    const plagiarismPercent = Math.floor(Math.random() * 30);
-    setResults({
-      percentage: plagiarismPercent,
-      sources: plagiarismPercent > 0 ? [
-        { url: "example.com/article1", match: Math.floor(Math.random() * 15) },
-        { url: "wikipedia.org/wiki/topic", match: Math.floor(Math.random() * 10) },
-      ] : []
-    });
-    setIsScanning(false);
+    setError(null);
+
+    try {
+      const response = await fetch("http://localhost:3001/api/plagiarism", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: inputText }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Plagiarism check failed");
+      }
+
+      // Parse API response - adjust based on actual API response structure
+      const plagiarismPercent = data.plagiarism_percentage || data.percentage || 0;
+      const sources = data.sources || data.matches || [];
+      
+      setResults({
+        percentage: Math.round(plagiarismPercent),
+        sources: sources.map((s: { url?: string; source?: string; match?: number; percentage?: number }) => ({
+          url: s.url || s.source || "Unknown source",
+          match: s.match || s.percentage || 0,
+        })),
+      });
+    } catch (err) {
+      console.error("Plagiarism check error:", err);
+      setError(err instanceof Error ? err.message : "Plagiarism check failed");
+    } finally {
+      setIsScanning(false);
+    }
   };
 
   return (
@@ -121,7 +143,7 @@ export default function PlagiarismChecker() {
           </div>
 
           {/* Results */}
-          {(isScanning || results) && (
+          {(isScanning || results || error) && (
             <div className={`border-t p-6 ${isDark ? "border-zinc-800 bg-zinc-900/50" : "border-gray-200 bg-gray-50"}`}>
               {isScanning && (
                 <div className="flex flex-col items-center justify-center py-8">
@@ -129,7 +151,13 @@ export default function PlagiarismChecker() {
                   <p className={`text-sm ${isDark ? "text-zinc-400" : "text-gray-600"}`}>Scanning for plagiarism...</p>
                 </div>
               )}
-              {results && !isScanning && (
+              {error && !isScanning && (
+                <div className="flex flex-col items-center justify-center py-8">
+                  <p className="text-sm text-red-500">{error}</p>
+                  <button onClick={() => setError(null)} className="mt-2 text-xs text-emerald-500 hover:underline">Try again</button>
+                </div>
+              )}
+              {results && !isScanning && !error && (
                 <div>
                   <div className="flex items-center gap-4 mb-6">
                     <div className={`w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold ${results.percentage > 20 ? "bg-red-500/20 text-red-400" : results.percentage > 10 ? "bg-amber-500/20 text-amber-400" : "bg-emerald-500/20 text-emerald-400"}`}>{results.percentage}%</div>

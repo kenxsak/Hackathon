@@ -33,6 +33,7 @@ export default function AIHumanizer() {
   const [outputText, setOutputText] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -75,14 +76,29 @@ export default function AIHumanizer() {
     if (!inputText.trim()) return;
     setIsProcessing(true);
     setOutputText("");
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    const humanized = inputText
-      .replace(/utilize/gi, "use")
-      .replace(/implement/gi, "put in place")
-      .replace(/facilitate/gi, "help")
-      .replace(/subsequently/gi, "then");
-    setOutputText(humanized);
-    setIsProcessing(false);
+    setError(null);
+
+    try {
+      const response = await fetch("http://localhost:3001/api/humanize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: inputText, mode: selectedMode.toLowerCase() }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Humanization failed");
+      }
+
+      // Parse API response - adjust based on actual API response structure
+      setOutputText(data.humanized_text || data.text || data.result || inputText);
+    } catch (err) {
+      console.error("Humanize error:", err);
+      setError(err instanceof Error ? err.message : "Humanization failed");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleTrySample = () => {
@@ -206,7 +222,13 @@ export default function AIHumanizer() {
                       <p className={`text-sm ${isDark ? "text-zinc-400" : "text-gray-600"}`}>Humanizing your text...</p>
                     </motion.div>
                   )}
-                  {outputText && !isProcessing && (
+                  {error && !isProcessing && (
+                    <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="h-72 flex flex-col items-center justify-center gap-3">
+                      <p className="text-sm text-red-500">{error}</p>
+                      <button onClick={() => setError(null)} className="text-xs text-emerald-500 hover:underline">Try again</button>
+                    </motion.div>
+                  )}
+                  {outputText && !isProcessing && !error && (
                     <motion.div key="output" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={`h-72 overflow-y-auto text-sm leading-relaxed ${isDark ? "text-white" : "text-gray-900"}`}>{outputText}</motion.div>
                   )}
                 </AnimatePresence>

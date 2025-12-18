@@ -126,20 +126,31 @@ export default function Paraphraser() {
     if (!inputText.trim()) return;
     setIsProcessing(true);
     setOutputText("");
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    const words = inputText.split(" ");
-    const paraphrased = words.map((word, i) => {
-      if (i % 3 === 0 && word.length > 3) {
-        const synonyms: Record<string, string> = {
-          "good": "excellent", "bad": "poor", "big": "large", "small": "tiny",
-          "happy": "joyful", "sad": "melancholy", "fast": "rapid", "slow": "gradual",
-        };
-        return synonyms[word.toLowerCase()] || word;
+
+    try {
+      const response = await fetch("http://localhost:3001/api/paraphrase", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          text: inputText, 
+          mode: selectedMode.toLowerCase(), 
+          synonymLevel: synonymsLevel 
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Paraphrasing failed");
       }
-      return word;
-    }).join(" ");
-    setOutputText(paraphrased);
-    setIsProcessing(false);
+
+      setOutputText(data.paraphrased_text || inputText);
+    } catch (err) {
+      console.error("Paraphrase error:", err);
+      setOutputText("Error: " + (err instanceof Error ? err.message : "Paraphrasing failed"));
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleTrySample = () => {
